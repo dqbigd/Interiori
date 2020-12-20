@@ -54,6 +54,12 @@ flutter:
      - assets/images/welcome.png
      - assets/images/signup.png
      - assets/images/login.png
+     - assets/images/designer.svg
+     - assets/images/gallery.svg
+     - assets/images/save_design.svg
+     - assets/images/shop.svg
+     - assets/images/bg_home.png
+     - assets/images/logout.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

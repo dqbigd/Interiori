@@ -8,54 +8,45 @@ class ApiNetwork {
   SharedPreferencesManager sharedPreferencesManager =
       SharedPreferencesManager();
 
-  final String baseUrl = 'https://d48b60241ade.ngrok.io';
+  final String baseUrl = 'http://76c2606d40eb.ngrok.io';
 
   //login
-  // Future<LoginResponse> login(String username, String password) async {
-  //   var apiUrl = baseUrl + '/ar/login';
-  //
-  //   var response = await http
-  //       .post(apiUrl, body: {"username": username, "password": password});
-  //
-  //   if (response.statusCode == 200) {
-  //     var responseString = response.body;
-  //
-  //     return loginResponseFromJson(responseString);
-  //   } else if (response.statusCode == 401) {
-  //     Get.snackbar('Unauthorized', 'Username or password invalid',
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         margin: EdgeInsets.only(bottom: 5));
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  Future<LoginResponse> login(String email, String password) async {
+    var apiUrl = baseUrl + '/auth/signin';
 
-//login
-  Future<SignUpResponse> signUp(
-      String fullname, String username, String email, String password) async {
+    var response =
+        await http.post(apiUrl, body: {"email": email, "password": password});
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return loginResponseFromJson(responseString);
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Unauthorized', 'Username or password invalid',
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.only(bottom: 5));
+    } else {
+      return null;
+    }
+  }
+
+  //sign up
+  Future<SignUpResponse> signUp(String fullname, String username, String email,
+      String password, String role) async {
     var apiUrl = baseUrl + '/auth/signup';
 
     var response = await http.post(apiUrl, body: {
-      "fullname": fullname,
+      "full_name": fullname,
       "username": username,
       "email": email,
-      "password": password
+      "password": password,
+      "role": role
     });
 
     if (response.statusCode == 200) {
       var responseString = response.body;
-      var responsefromJson = signUpResponseFromJson(responseString);
 
-      if (responsefromJson.code == '00' &&
-          responsefromJson.message == 'Found.') {
-        Get.snackbar('Oops', 'Username already taken',
-            snackPosition: SnackPosition.BOTTOM,
-            margin: EdgeInsets.only(bottom: 5));
-        return null;
-      } else if (responsefromJson.code == '00' &&
-          responsefromJson.message == 'Ok.') {
-        return signUpResponseFromJson(responseString);
-      }
+      return signUpResponseFromJson(responseString);
     } else {
       return null;
     }

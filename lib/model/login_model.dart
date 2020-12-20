@@ -76,3 +76,48 @@ class Data {
         "createdAt": createdAt.toIso8601String(),
       };
 }
+
+LoginResponse loginResponseFromJson(String str) =>
+    LoginResponse.fromJson(json.decode(str));
+
+String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
+
+class LoginResponse {
+  LoginResponse({
+    this.code,
+    this.message,
+    this.data,
+  });
+
+  String code;
+  String message;
+  Login data;
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+        code: json["code"],
+        message: json["message"],
+        data: Login.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "message": message,
+        "data": data.toJson(),
+      };
+}
+
+class Login {
+  Login({
+    this.token,
+  });
+
+  String token;
+
+  factory Login.fromJson(Map<String, dynamic> json) => Login(
+        token: json["token"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "token": token,
+      };
+}

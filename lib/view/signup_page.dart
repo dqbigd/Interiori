@@ -3,10 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:interiori/controller/login_controller.dart';
 import 'package:interiori/style/color.dart';
+import 'package:interiori/style/component.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
 import 'package:interiori/view/login_page.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   SharedPreferencesManager prefs = SharedPreferencesManager();
   LoginController loginController = Get.put(LoginController());
 
@@ -14,6 +20,33 @@ class SignUpPage extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  List<DropdownMenuItem<ListItem>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<ListItem>> items = List();
+    for (ListItem listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(listItem.name),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
+  }
+
+  List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
+  ListItem _selectedItem;
+  List<ListItem> _dropdownItems = [];
+
+  void initState() {
+    super.initState();
+
+    _dropdownItems.add(new ListItem(1, 'User'));
+    _dropdownItems.add(new ListItem(2, 'Designer'));
+
+    _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
+    // _selectedItem = _dropdownMenuItems[0].value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,143 +80,127 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(
                     height: 51,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.face,
-                            color: primaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                          ),
-                          filled: true,
-                          // hintStyle: new TextStyle(color: primaryColor),
-                          hintText: "Fullname",
-                          fillColor: Color(0XFFDAE3F3)),
-                    ),
+                  RoundedInputField(
+                    controller: fullnameController,
+                    hintText: "Fullname",
+                    icon: Icons.face,
+                    onChanged: (value) {},
+                  ),
+                  RoundedInputField(
+                    controller: usernameController,
+                    hintText: "Username",
+                    icon: Icons.account_circle_rounded,
+                    onChanged: (value) {},
+                  ),
+                  RoundedInputField(
+                    controller: emailController,
+                    hintText: "Email",
+                    onChanged: (value) {},
+                  ),
+                  Obx(() {
+                    return RoundedPasswordField(
+                        controller: passwordController,
+                        onTap: () {
+                          loginController.togglePasswordVisibility();
+                        },
+                        iconColor: loginController.isHidePassword.value
+                            ? Colors.grey
+                            : primaryColor,
+                        icon: loginController.isHidePassword.value
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        onChanged: (value) {},
+                        obscureText: loginController.isHidePassword.value);
+                  }),
+                  TextFieldContainer(
+                    child: DropdownButton<ListItem>(
+                        hint: Text('Choose your role'),
+                        value: _selectedItem,
+                        items: _dropdownMenuItems,
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_drop_down_rounded),
+                        underline: SizedBox(),
+                        onChanged: (newValue) {
+                          loginController.role.value = newValue.value;
+                          setState(() {
+                            _selectedItem = newValue;
+                          });
+                        }),
                   ),
                   SizedBox(
                     height: 12,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.account_circle_rounded,
-                            color: primaryColor,
+                  Obx(() {
+                    return Visibility(
+                      visible: loginController.isLoading.value,
+                      child: Column(
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
+                          SizedBox(
+                            height: 12,
                           ),
-                          filled: true,
-                          // hintStyle: new TextStyle(color: primaryColor),
-                          hintText: "Username",
-                          fillColor: Color(0XFFDAE3F3)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email_rounded,
-                            color: primaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                          ),
-                          filled: true,
-                          // hintStyle: new TextStyle(color: primaryColor),
-                          hintText: "Email",
-                          fillColor: Color(0XFFDAE3F3)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    child: Obx(() {
-                      return TextFormField(
-                        keyboardType: TextInputType.text,
-                        obscureText: loginController.isHidePassword.value,
-                        decoration: InputDecoration(
-                            suffixIcon: GestureDetector(
-                                onTap: () {
-                                  loginController.togglePasswordVisibility();
-                                },
-                                child: Icon(
-                                  loginController.isHidePassword.value
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: loginController.isHidePassword.value
-                                      ? Colors.grey
-                                      : primaryColor,
-                                )),
-                            prefixIcon: Icon(
-                              Icons.lock_rounded,
-                              color: primaryColor,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                            ),
-                            filled: true,
-                            // hintStyle: new TextStyle(color: primaryColor),
-                            hintText: "Password",
-                            fillColor: Color(0XFFDAE3F3)),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    height: 39,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: primaryColor)),
-                      onPressed: () {},
-                      color: primaryColor,
-                      textColor: Colors.white,
-                      child: Text("Signup".toUpperCase(),
-                          style: TextStyle(fontSize: 14)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
+                        ],
+                      ),
+                    );
+                  }),
+                  RoundedButton(
+                    text: "SIGNUP",
+                    press: () {
+                      String fullname = fullnameController.text;
+                      String username = usernameController.text;
+                      String email = emailController.text;
+                      String pass = passwordController.text;
+                      String role = _selectedItem.name.toLowerCase();
+
+                      print(fullname +
+                          ' ' +
+                          username +
+                          ' ' +
+                          email +
+                          ' ' +
+                          pass +
+                          ' ' +
+                          role);
+
+                      if (fullname != '' &&
+                          username != '' &&
+                          email != '' &&
+                          pass != '' &&
+                          role != '') {
+                        loginController.postSignup(
+                            fullname, username, email, pass, role);
+                      } else {
+                        Get.snackbar('Oops', 'All fields are required',
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: EdgeInsets.only(bottom: 5));
+                      }
+                    },
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(LoginPage());
+                      Get.off(LoginPage());
                     },
                     child: Text(
                       'Already have an Account ? Login',
                       style: TextStyle(color: primaryColor),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
                 ],
               ),
             ),
           ),
         ));
   }
+}
+
+class ListItem {
+  int value;
+  String name;
+
+  ListItem(this.value, this.name);
 }

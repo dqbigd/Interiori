@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:interiori/style/color.dart';
+import 'package:interiori/style/component.dart';
+import 'package:interiori/view/login_page.dart';
 import 'package:interiori/view/signup_page.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -23,7 +25,7 @@ class WelcomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 36,
+                    height: 46,
                   ),
                   Center(
                       child: Text(
@@ -35,40 +37,21 @@ class WelcomePage extends StatelessWidget {
                   ),
                   Center(child: Image.asset('assets/images/welcome.png')),
                   SizedBox(
-                    height: 51,
+                    height: 121,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    height: 39,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: primaryColor)),
-                      onPressed: () {},
-                      color: primaryColor,
-                      textColor: Colors.white,
-                      child: Text("Login".toUpperCase(),
-                          style: TextStyle(fontSize: 14)),
-                    ),
+                  RoundedButton(
+                    text: "LOGIN",
+                    press: () {
+                      Get.off(LoginPage());
+                    },
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    height: 39,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Color(0XFFDAE3F3))),
-                      onPressed: () {
-                        Get.to(SignUpPage());
-                      },
-                      color: Color(0XFFDAE3F3),
-                      textColor: Colors.white,
-                      child: Text("signup".toUpperCase(),
-                          style: TextStyle(fontSize: 14, color: primaryColor)),
-                    ),
+                  RoundedButton(
+                    text: "SIGNUP",
+                    color: primaryLightColor,
+                    textColor: primaryColor,
+                    press: () {
+                      Get.off(SignUpPage());
+                    },
                   ),
                 ],
               ),

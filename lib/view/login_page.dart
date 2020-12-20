@@ -1,13 +1,146 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:interiori/controller/login_controller.dart';
+import 'package:interiori/style/color.dart';
+import 'package:interiori/style/component.dart';
+import 'package:interiori/utils/shared_preferences_manager.dart';
+import 'package:interiori/view/home_page.dart';
+import 'package:interiori/view/signup_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  SharedPreferencesManager prefs = SharedPreferencesManager();
+  LoginController loginController = Get.put(LoginController());
+
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  void _checkLoggedIn() {
+    prefs.getSignInStatus().then((value) {
+      if (value) {
+        Get.off(HomePage());
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Interiori'),
-      ),
-      body: Text('Hello fellas'),
-    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFF000000),
+          systemNavigationBarDividerColor: null,
+          statusBarColor: Color(0x00000000),
+          systemNavigationBarIconBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 36,
+                  ),
+                  Center(
+                      child: Text(
+                    'LOGIN',
+                    style: TextStyle(fontSize: 17),
+                  )),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Center(child: Image.asset('assets/images/login.png')),
+                  SizedBox(
+                    height: 51,
+                  ),
+                  RoundedInputField(
+                    hintText: "Email",
+                    onChanged: (value) {},
+                  ),
+                  Obx(() {
+                    return RoundedPasswordField(
+                        onTap: () {
+                          loginController.togglePasswordVisibility();
+                        },
+                        iconColor: loginController.isHidePassword.value
+                            ? Colors.grey
+                            : primaryColor,
+                        icon: loginController.isHidePassword.value
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        onChanged: (value) {},
+                        obscureText: loginController.isHidePassword.value);
+                  }),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Obx(() {
+                    return Visibility(
+                      visible: loginController.isLoading.value,
+                      child: Column(
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                  RoundedButton(
+                    text: "LOGIN",
+                    press: () {
+                      Get.off(HomePage());
+                      bool valid = true;
+                      if (passwordController.text == '') {
+                        valid = false;
+                      } else if (usernameController.text == '') {
+                        valid = false;
+                      }
+
+                      if (valid) {
+                        Get.off(HomePage());
+                        // loginController.postSignup(
+                        //     fullnameController.text,
+                        //     usernameController.text,
+                        //     emailController.text,
+                        //     passwordController.text);
+                      }
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.off(SignUpPage());
+                    },
+                    child: Text(
+                      'Don\'t have an Account ? Sign Up',
+                      style: TextStyle(color: primaryColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }

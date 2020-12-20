@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Good Morning',
+                                  'Have a nice day',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                       fontSize: 30, color: Color(0XFF727272)),

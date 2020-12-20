@@ -154,16 +154,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       String pass = passwordController.text;
                       String role = _selectedItem.name.toLowerCase();
 
-                      print(fullname +
-                          ' ' +
-                          username +
-                          ' ' +
-                          email +
-                          ' ' +
-                          pass +
-                          ' ' +
-                          role);
-
                       if (fullname != '' &&
                           username != '' &&
                           email != '' &&

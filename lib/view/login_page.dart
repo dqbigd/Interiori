@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   LoginController loginController = Get.put(LoginController());
 
   TextEditingController passwordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   void _checkLoggedIn() {
@@ -69,11 +68,13 @@ class _LoginPageState extends State<LoginPage> {
                     height: 51,
                   ),
                   RoundedInputField(
+                    controller: emailController,
                     hintText: "Email",
                     onChanged: (value) {},
                   ),
                   Obx(() {
                     return RoundedPasswordField(
+                        controller: passwordController,
                         onTap: () {
                           loginController.togglePasswordVisibility();
                         },
@@ -107,21 +108,15 @@ class _LoginPageState extends State<LoginPage> {
                   RoundedButton(
                     text: "LOGIN",
                     press: () {
-                      Get.off(HomePage());
-                      bool valid = true;
-                      if (passwordController.text == '') {
-                        valid = false;
-                      } else if (usernameController.text == '') {
-                        valid = false;
-                      }
+                      String email = emailController.text;
+                      String pass = passwordController.text;
 
-                      if (valid) {
-                        Get.off(HomePage());
-                        // loginController.postSignup(
-                        //     fullnameController.text,
-                        //     usernameController.text,
-                        //     emailController.text,
-                        //     passwordController.text);
+                      if (email != '' && pass != '') {
+                        loginController.postLogin(email, pass);
+                      } else {
+                        Get.snackbar('Oops', 'All fields are required',
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: EdgeInsets.only(bottom: 5));
                       }
                     },
                   ),

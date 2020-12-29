@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 
-class GalleryDesignPage extends StatelessWidget {
+class DesignerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -60,20 +60,6 @@ class GalleryDesignPage extends StatelessWidget {
                       SizedBox(
                         height: 8,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Gallery Design',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0XFF727272),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Categories(),
                     ],
                   ),
                 ),
@@ -81,71 +67,5 @@ class GalleryDesignPage extends StatelessWidget {
             ),
           ),
         ));
-  }
-}
-
-class Categories extends StatefulWidget {
-  @override
-  _CategoriesState createState() => _CategoriesState();
-}
-
-class _CategoriesState extends State<Categories> {
-  List<String> categories = [
-    "All",
-    "Recommend",
-    "Industrial",
-    "Minimalist",
-    "Vintage"
-  ];
-  // By default our first item will be selected
-  int selectedIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16), //20.0
-      child: SizedBox(
-        height: 25,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
-          itemBuilder: (context, index) => buildCategory(index),
-        ),
-      ),
-    );
-  }
-
-  Widget buildCategory(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              categories[index],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: selectedIndex == index
-                    ? Color(0XFF707070)
-                    : Color(0XFF727272),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 16 / 4), //top padding 5
-              height: 2,
-              width: 30,
-              color: selectedIndex == index
-                  ? Color(0XFF707070)
-                  : Colors.transparent,
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -18,12 +18,12 @@ class SignUpResponse {
 
   String code;
   String message;
-  Data data;
+  SignUp data;
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) => SignUpResponse(
         code: json["code"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: SignUp.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,8 +33,8 @@ class SignUpResponse {
       };
 }
 
-class Data {
-  Data({
+class SignUp {
+  SignUp({
     this.id,
     this.fullName,
     this.username,
@@ -54,7 +54,7 @@ class Data {
   DateTime updatedAt;
   DateTime createdAt;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
         id: json["id"],
         fullName: json["full_name"],
         username: json["username"],
@@ -119,5 +119,92 @@ class Login {
 
   Map<String, dynamic> toJson() => {
         "token": token,
+      };
+}
+
+ProfileResponse profileResponseFromJson(String str) =>
+    ProfileResponse.fromJson(json.decode(str));
+
+String profileResponseToJson(ProfileResponse data) =>
+    json.encode(data.toJson());
+
+class ProfileResponse {
+  ProfileResponse({
+    this.code,
+    this.message,
+    this.data,
+  });
+
+  String code;
+  String message;
+  Profile data;
+
+  factory ProfileResponse.fromJson(Map<String, dynamic> json) =>
+      ProfileResponse(
+        code: json["code"],
+        message: json["message"],
+        data: Profile.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "message": message,
+        "data": data.toJson(),
+      };
+}
+
+class Profile {
+  Profile({
+    this.id,
+    this.username,
+    this.fullName,
+    this.email,
+    this.password,
+    this.role,
+    this.chatId,
+    this.crId,
+    this.token,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  String username;
+  String fullName;
+  String email;
+  String password;
+  String role;
+  dynamic chatId;
+  dynamic crId;
+  String token;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
+        id: json["id"],
+        username: json["username"],
+        fullName: json["full_name"],
+        email: json["email"],
+        password: json["password"],
+        role: json["role"],
+        chatId: json["chat_id"],
+        crId: json["cr_id"],
+        token: json["token"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "username": username,
+        "full_name": fullName,
+        "email": email,
+        "password": password,
+        "role": role,
+        "chat_id": chatId,
+        "cr_id": crId,
+        "token": token,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
       };
 }

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 
-class GalleryDesignPage extends StatelessWidget {
+class DesignerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -63,7 +63,7 @@ class GalleryDesignPage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(left: 8),
                         child: Text(
-                          'Gallery Design',
+                          'Designer',
                           style: TextStyle(
                             fontSize: 25,
                             color: Color(0XFF727272),

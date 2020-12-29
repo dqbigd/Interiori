@@ -34,9 +34,13 @@ class LoginController extends GetxController {
         print('token : $token');
 
         prefs.setLoggedIn(true, token);
-        // prefs.setProfile(fullName);
 
-        Get.off(HomePage());
+        ProfileResponse profileResponse = await apiNetwork.profile();
+
+        if (profileResponse != null) {
+          prefs.setProfile(profileResponse.data.fullName);
+          Get.off(HomePage());
+        }
       }
     } finally {
       isLoading(false);

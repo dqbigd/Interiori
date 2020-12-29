@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:interiori/controller/home_controller.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
 
+import 'designer/designer_page.dart';
+import 'gallery_design/gallery_design_page.dart';
+
 class HomePage extends StatelessWidget {
   SharedPreferencesManager prefs = SharedPreferencesManager();
+  HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +66,15 @@ class HomePage extends StatelessWidget {
                                 PopUpMenu(),
                               ],
                             ),
-                            Text(
-                              'User',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0XFF727272)),
-                            ),
+                            Obx(() {
+                              return Text(
+                                '${homeController.user.value}',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0XFF727272)),
+                              );
+                            }),
                           ],
                         ),
                       ),
@@ -88,14 +96,16 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(GalleryDesignPage());
+                            },
                             child: MenuCard(
                                 title: 'Gallery Design',
                                 image: 'assets/images/gallery.svg'),
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Get.to(PurchaseOrderPage());
+                              Get.to(DesignerPage());
                             },
                             child: MenuCard(
                                 title: 'Designer',
@@ -144,6 +154,7 @@ class HomePage extends StatelessWidget {
 }
 
 class PopUpMenu extends StatelessWidget {
+  HomeController homeController = Get.put(HomeController());
   // var noProposal = '';
   // var custCode = '';
   //
@@ -165,7 +176,9 @@ class PopUpMenu extends StatelessWidget {
         ),
       ],
       onSelected: (value) {
-        if (value == 1) {}
+        if (value == 1) {
+          homeController.logout();
+        }
       },
     );
   }

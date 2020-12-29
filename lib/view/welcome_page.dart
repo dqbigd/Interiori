@@ -3,10 +3,34 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
+import 'package:interiori/utils/shared_preferences_manager.dart';
+import 'package:interiori/view/home_page.dart';
 import 'package:interiori/view/login_page.dart';
 import 'package:interiori/view/signup_page.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  SharedPreferencesManager prefs = SharedPreferencesManager();
+
+  void _checkLoggedIn() {
+    prefs.getSignInStatus().then((value) {
+      if (value) {
+        Get.off(HomePage());
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(

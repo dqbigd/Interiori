@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:interiori/model/login_model.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiNetwork {
   SharedPreferencesManager sharedPreferencesManager =
@@ -52,9 +53,31 @@ class ApiNetwork {
     }
   }
 
-  //new customer data
-  // Future<List<CustomerResponse>> newCustomerData(
-  //     String bulan, String tahun) async {
+  //profile
+  Future<ProfileResponse> profile() async {
+    var apiUrl = baseUrl + '/user/profile';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return profileResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  //profile
+  // Future<List<CustomerResponse>> profile() async {
   //   var apiUrl = baseUrl + '/ar/customer?bulan=$bulan&tahun=$tahun';
   //   var token = '';
   //
@@ -66,7 +89,7 @@ class ApiNetwork {
   //   var response = await http.get(apiUrl, headers: {
   //     'Content-Type': 'application/json',
   //     'Accept': 'application/json',
-  //     'Authorization': 'Bearer $token',
+  //     'Authorization': '$token',
   //   });
   //
   //   if (response.statusCode == 200) {

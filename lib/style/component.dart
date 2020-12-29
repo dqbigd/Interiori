@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:interiori/style/color.dart';
 
+//rounded button
 class RoundedButton extends StatelessWidget {
   final String text;
   final Function press;
@@ -36,10 +37,12 @@ class RoundedButton extends StatelessWidget {
   }
 }
 
+//rounded input field
 class RoundedInputField extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final Color bgColor;
+  final Color iconColor;
   final ValueChanged<String> onChanged;
   final TextEditingController controller;
 
@@ -48,6 +51,7 @@ class RoundedInputField extends StatelessWidget {
     this.hintText,
     this.icon = Icons.person,
     this.bgColor = primaryLightColor,
+    this.iconColor = primaryColor,
     this.onChanged,
     this.controller,
   }) : super(key: key);
@@ -70,7 +74,7 @@ class RoundedInputField extends StatelessWidget {
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: primaryColor,
+            color: iconColor,
           ),
           hintText: hintText,
           border: InputBorder.none,
@@ -80,6 +84,7 @@ class RoundedInputField extends StatelessWidget {
   }
 }
 
+//textfield container
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
   const TextFieldContainer({
@@ -103,6 +108,7 @@ class TextFieldContainer extends StatelessWidget {
   }
 }
 
+//rounded password field
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final Function onTap;
@@ -148,6 +154,7 @@ class RoundedPasswordField extends StatelessWidget {
   }
 }
 
+//menu card
 class MenuCard extends StatelessWidget {
   final String image;
   final String title;

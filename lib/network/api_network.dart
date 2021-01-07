@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:interiori/model/gallery_design_model.dart';
 import 'package:interiori/model/login_model.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +10,7 @@ class ApiNetwork {
   SharedPreferencesManager sharedPreferencesManager =
       SharedPreferencesManager();
 
-  final String baseUrl = 'http://76c2606d40eb.ngrok.io';
+  final String baseUrl = 'http://52522debbeb5.ngrok.io';
 
   //login
   Future<LoginResponse> login(String email, String password) async {
@@ -71,6 +72,31 @@ class ApiNetwork {
       var responseString = response.body;
 
       return profileResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  //gallery design
+  Future<GalleryDesignResponse> galleryDesign() async {
+    var apiUrl = baseUrl + '/post';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      print(responseString);
+
+      return galleryDesignResponseFromJson(responseString);
     } else {
       return null;
     }

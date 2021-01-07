@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:interiori/controller/gallery_design_controller.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class GalleryDesignPage extends StatelessWidget {
+  GalleryDesignController galleryDesignController =
+      Get.put(GalleryDesignController());
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -19,66 +24,175 @@ class GalleryDesignPage extends StatelessWidget {
         ),
         child: Scaffold(
           backgroundColor: Color(0XFFF6F6F6),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  color: primaryLightColor,
-                  padding: EdgeInsets.only(top: 24, right: 16, left: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: SvgPicture.asset(
-                                  'assets/images/icon_back.svg')),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          SizedBox(
-                            height: 65,
-                            width: 325,
-                            child: RoundedInputField(
-                              hintText: "Search",
-                              icon: Icons.search,
-                              onChanged: (value) {},
-                              bgColor: Colors.white,
-                              iconColor: Color(0XFF727272),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          SvgPicture.asset('assets/images/icon_save.svg'),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Gallery Design',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0XFF727272),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                color: primaryLightColor,
+                padding: EdgeInsets.only(top: 24, right: 16, left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: SvgPicture.asset(
+                                'assets/images/icon_back.svg')),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        SizedBox(
+                          height: 65,
+                          width: 325,
+                          child: RoundedInputField(
+                            hintText: "Search",
+                            icon: Icons.search,
+                            onChanged: (value) {},
+                            bgColor: Colors.white,
+                            iconColor: Color(0XFF727272),
                           ),
                         ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        SvgPicture.asset('assets/images/icon_save.svg'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 8),
+                      child: Text(
+                        'Gallery Design',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Color(0XFF727272),
+                        ),
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Categories(),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Categories(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Obx(
+                () {
+                  if (galleryDesignController.isLoading.value) {
+                    return Container(
+                        margin: EdgeInsets.only(top: 60),
+                        child: Center(child: CircularProgressIndicator()));
+                  } else {
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GridView.builder(
+                          itemCount: galleryDesignController
+                              .listGalleryDesign.value.data.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 0.75,
+                          ),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                margin: EdgeInsets.only(left: 3, right: 3),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(23),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black.withOpacity(.1),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                      height: 130,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(23),
+                                        child: Image.network(
+                                          'http://c63e71fa2df1.ngrok.io/images/post/${galleryDesignController.listGalleryDesign.value.data[index].image}',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 11,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                          '${galleryDesignController.listGalleryDesign.value.data[index].name}'),
+                                    ),
+                                    SizedBox(
+                                      height: 18,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SmoothStarRating(
+                                            allowHalfRating: true,
+                                            starCount: 5,
+                                            rating: 3.5,
+                                            size: 20,
+                                            color: Color(0XFFFFD700),
+                                            borderColor: Color(0XFFFFD700),
+                                            isReadOnly: true,
+                                            spacing: 0.0),
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        Text(
+                                            '${galleryDesignController.listGalleryDesign.value.data[index].vote} Users')
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 16, right: 16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                              '${galleryDesignController.listGalleryDesign.value.data[index].saved}'),
+                                          SizedBox(
+                                            width: 6,
+                                          ),
+                                          SvgPicture.asset(
+                                              'assets/images/icon_save.svg'),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         ));
   }

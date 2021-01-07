@@ -112,21 +112,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         onChanged: (value) {},
                         obscureText: loginController.isHidePassword.value);
                   }),
-                  TextFieldContainer(
-                    child: DropdownButton<ListItem>(
-                        hint: Text('Choose your role'),
-                        value: _selectedItem,
-                        items: _dropdownMenuItems,
-                        isExpanded: true,
-                        icon: Icon(Icons.arrow_drop_down_rounded),
-                        underline: SizedBox(),
-                        onChanged: (newValue) {
-                          loginController.role.value = newValue.value;
-                          setState(() {
-                            _selectedItem = newValue;
-                          });
-                        }),
-                  ),
+                  // TextFieldContainer(
+                  //   child: DropdownButton<ListItem>(
+                  //       hint: Text('Choose your role'),
+                  //       value: _selectedItem,
+                  //       items: _dropdownMenuItems,
+                  //       isExpanded: true,
+                  //       icon: Icon(Icons.arrow_drop_down_rounded),
+                  //       underline: SizedBox(),
+                  //       onChanged: (newValue) {
+                  //         loginController.role.value = newValue.value;
+                  //         setState(() {
+                  //           _selectedItem = newValue;
+                  //         });
+                  //       }),
+                  // ),
                   SizedBox(
                     height: 12,
                   ),
@@ -152,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       String username = usernameController.text;
                       String email = emailController.text;
                       String pass = passwordController.text;
-                      String role = _selectedItem.name.toLowerCase();
+                      String role = 'user';
 
                       if (fullname != '' &&
                           username != '' &&

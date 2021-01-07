@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:interiori/controller/gallery_design_controller.dart';
 import 'package:interiori/controller/home_controller.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
+import 'package:interiori/view/saved/saved_page.dart';
 
 import 'designer/designer_page.dart';
 import 'gallery_design/gallery_design_page.dart';
@@ -13,6 +15,8 @@ import 'gallery_design/gallery_design_page.dart';
 class HomePage extends StatelessWidget {
   SharedPreferencesManager prefs = SharedPreferencesManager();
   HomeController homeController = Get.put(HomeController());
+  GalleryDesignController galleryDesignController =
+      Get.put(GalleryDesignController());
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +101,7 @@ class HomePage extends StatelessWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
+                              galleryDesignController.getGalleryDesignData();
                               Get.to(GalleryDesignPage());
                             },
                             child: MenuCard(
@@ -121,8 +126,7 @@ class HomePage extends StatelessWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              // relaxationVerificationController.getRelaxationData();
-                              // Get.to(RelaxationVerificationPage());
+                              Get.to(SavedPage());
                             },
                             child: MenuCard(
                                 title: 'Saved Design',
@@ -130,8 +134,7 @@ class HomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // verificationNewCustomerController.getNewCustData();
-                              // Get.to(VerificationNewCustomerPage());
+                              Get.to(SavedPage());
                             },
                             child: MenuCard(
                                 title: 'Shop', image: 'assets/images/shop.svg'),

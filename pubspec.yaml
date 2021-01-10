@@ -63,6 +63,11 @@ flutter:
      - assets/images/logout.svg
      - assets/images/icon_back.svg
      - assets/images/icon_save.svg
+     - assets/images/icon_star.svg
+     - assets/images/icon_bookmark.svg
+     - assets/images/icon_whatsapp.svg
+     - assets/images/icon_email.svg
+     - assets/images/icon_skype.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

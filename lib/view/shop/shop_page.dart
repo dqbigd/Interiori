@@ -54,7 +54,7 @@ class ShopPage extends StatelessWidget {
                           SizedBox(
                             width: 12,
                           ),
-                          SvgPicture.asset('assets/images/icon_save.svg'),
+                          // SvgPicture.asset('assets/images/icon_save.svg'),
                         ],
                       ),
                       SizedBox(

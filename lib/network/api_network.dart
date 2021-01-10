@@ -102,6 +102,29 @@ class ApiNetwork {
     }
   }
 
+  //gallery design detail
+  Future<GalleryDesignDetailResponse> galleryDesignDetail(var idImage) async {
+    var apiUrl = baseUrl + '/post/show/$idImage';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return galleryDesignDetailResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
   //profile
   // Future<List<CustomerResponse>> profile() async {
   //   var apiUrl = baseUrl + '/ar/customer?bulan=$bulan&tahun=$tahun';

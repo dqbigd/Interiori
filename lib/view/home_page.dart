@@ -8,6 +8,7 @@ import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
 import 'package:interiori/view/saved/saved_page.dart';
+import 'package:interiori/view/shop/shop_page.dart';
 
 import 'designer/designer_page.dart';
 import 'gallery_design/gallery_design_page.dart';
@@ -134,7 +135,7 @@ class HomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(SavedPage());
+                              Get.to(ShopPage());
                             },
                             child: MenuCard(
                                 title: 'Shop', image: 'assets/images/shop.svg'),

@@ -11,6 +11,8 @@ class GalleryDesignPage extends StatelessWidget {
   GalleryDesignController galleryDesignController =
       Get.put(GalleryDesignController());
 
+  String linkImage = 'http://c63e71fa2df1.ngrok.io/images/post/';
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -103,7 +105,10 @@ class GalleryDesignPage extends StatelessWidget {
                           ),
                           itemBuilder: (context, index) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                galleryDesignController
+                                    .getDetailPage(index + 1);
+                              },
                               child: Container(
                                 margin: EdgeInsets.only(left: 3, right: 3),
                                 decoration: BoxDecoration(
@@ -125,9 +130,16 @@ class GalleryDesignPage extends StatelessWidget {
                                       height: 130,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(23),
-                                        child: Image.network(
-                                          'http://c63e71fa2df1.ngrok.io/images/post/${galleryDesignController.listGalleryDesign.value.data[index].image}',
-                                          fit: BoxFit.fill,
+                                        child: Hero(
+                                          tag: galleryDesignController
+                                              .listGalleryDesign
+                                              .value
+                                              .data[index]
+                                              .image,
+                                          child: Image.network(
+                                            '$linkImage${galleryDesignController.listGalleryDesign.value.data[index].image}',
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -148,7 +160,12 @@ class GalleryDesignPage extends StatelessWidget {
                                         SmoothStarRating(
                                             allowHalfRating: true,
                                             starCount: 5,
-                                            rating: 3.5,
+                                            rating: galleryDesignController
+                                                .listGalleryDesign
+                                                .value
+                                                .data[index]
+                                                .rate
+                                                .toDouble(),
                                             size: 20,
                                             color: Color(0XFFFFD700),
                                             borderColor: Color(0XFFFFD700),

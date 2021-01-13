@@ -106,8 +106,9 @@ class GalleryDesignPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                galleryDesignController
-                                    .getDetailPage(index + 1);
+                                galleryDesignController.getDetailPage(
+                                    galleryDesignController.listGalleryDesign
+                                        .value.data[index].id);
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 3, right: 3),
@@ -138,7 +139,7 @@ class GalleryDesignPage extends StatelessWidget {
                                               .image,
                                           child: Image.network(
                                             '$linkImage${galleryDesignController.listGalleryDesign.value.data[index].image}',
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -164,8 +165,7 @@ class GalleryDesignPage extends StatelessWidget {
                                                 .listGalleryDesign
                                                 .value
                                                 .data[index]
-                                                .rate
-                                                .toDouble(),
+                                                .rate,
                                             size: 20,
                                             color: Color(0XFFFFD700),
                                             borderColor: Color(0XFFFFD700),

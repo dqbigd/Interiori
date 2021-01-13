@@ -34,6 +34,7 @@ dependencies:
   http: ^0.12.2
   intl: ^0.16.1
   smooth_star_rating: ^1.1.1
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,10 @@ flutter:
      - assets/images/icon_whatsapp.svg
      - assets/images/icon_email.svg
      - assets/images/icon_skype.svg
+     - assets/images/icon_add.svg
+     - assets/images/icon_skype_designer.svg
+     - assets/images/icon_wa_designer.svg
+     - assets/images/icon_email_designer.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

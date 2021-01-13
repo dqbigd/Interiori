@@ -12,12 +12,12 @@ class GalleryDesignController extends GetxController {
   var listGalleryDesign = GalleryDesignResponse().obs;
   var listGalleryDesignDetail = GalleryDesignDetailResponse().obs;
 
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   // getGalleryDesignData();
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    getGalleryDesignData();
+    super.onInit();
+  }
 
   getGalleryDesignData() async {
     isLoading(true);
@@ -29,7 +29,7 @@ class GalleryDesignController extends GetxController {
         // print('length : ' + response.data.length.toString());
 
         listGalleryDesign.value = response;
-        print(listGalleryDesign.value);
+        // print(listGalleryDesign.value);
         // print('length2 : ' + listGalleryDesign.value.data.length.toString());
       }
     } finally {

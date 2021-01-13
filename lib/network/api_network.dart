@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:interiori/model/designer_model.dart';
 import 'package:interiori/model/gallery_design_model.dart';
 import 'package:interiori/model/login_model.dart';
+import 'package:interiori/model/shop_model.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,7 +96,7 @@ class ApiNetwork {
     if (response.statusCode == 200) {
       var responseString = response.body;
 
-      print(responseString);
+      // print(responseString);
 
       return galleryDesignResponseFromJson(responseString);
     } else {
@@ -125,29 +127,97 @@ class ApiNetwork {
     }
   }
 
-  //profile
-  // Future<List<CustomerResponse>> profile() async {
-  //   var apiUrl = baseUrl + '/ar/customer?bulan=$bulan&tahun=$tahun';
-  //   var token = '';
-  //
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
-  //
-  //   // print('apiUrl ' + apiUrl);
-  //
-  //   var response = await http.get(apiUrl, headers: {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'Authorization': '$token',
-  //   });
-  //
-  //   if (response.statusCode == 200) {
-  //     var responseString = response.body;
-  //
-  //     return customerResponseFromJson(responseString);
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  //designer
+  Future<DesignerResponse> designer() async {
+    var apiUrl = baseUrl + '/designer/listdesigner';
+    var token = '';
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      // print(responseString);
+
+      return designerResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  //designer detail data
+  Future<DesignerDetailResponse> designerDetail(var id) async {
+    var apiUrl = baseUrl + '/user/detail/$id';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return designerDetailResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  //designer detail post
+  Future<DesignerDetailPostResponse> designerDetailPost(var id) async {
+    var apiUrl = baseUrl + '/post/postdesigner/$id';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return designerDetailPostResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  //shop data
+  Future<ShopResponse> shopData() async {
+    var apiUrl = baseUrl + '/shop';
+    var token = '';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(sharedPreferencesManager.KEY_TOKEN);
+
+    var response = await http.get(apiUrl, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+    });
+
+    if (response.statusCode == 200) {
+      var responseString = response.body;
+
+      return shopResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
 }

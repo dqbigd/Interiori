@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:interiori/controller/gallery_design_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GalleryDesignDetailPage extends StatelessWidget {
   GalleryDesignController galleryDesignController =
@@ -23,15 +24,15 @@ class GalleryDesignDetailPage extends StatelessWidget {
         ),
         child: Scaffold(
           backgroundColor: Color(0XFFF6F6F6),
-          body: Obx(() {
-            if (galleryDesignController.isLoading.value) {
-              return Container(
-                  margin: EdgeInsets.only(top: 60),
-                  child: Center(child: CircularProgressIndicator()));
-            } else {
-              return Stack(
-                children: [
-                  Column(
+          body: Stack(
+            children: [
+              Obx(() {
+                if (galleryDesignController.isLoading.value) {
+                  return Container(
+                      margin: EdgeInsets.only(top: 60),
+                      child: Center(child: CircularProgressIndicator()));
+                } else {
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Container(
@@ -69,78 +70,100 @@ class GalleryDesignDetailPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  var url =
+                                      '${galleryDesignController.listGalleryDesignDetail.value.data.linkSkype}';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
                                 child: SvgPicture.asset(
                                     'assets/images/icon_skype.svg')),
                             GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  var url =
+                                      '${galleryDesignController.listGalleryDesignDetail.value.data.linkWa}';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
                                 child: SvgPicture.asset(
                                     'assets/images/icon_whatsapp.svg')),
                             GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  var url =
+                                      'mailto:${galleryDesignController.listGalleryDesignDetail.value.data.linkEmail}';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
                                 child: SvgPicture.asset(
                                     'assets/images/icon_email.svg'))
                           ],
                         ),
                       )
                     ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 30, left: 16, right: 16),
-                    padding: EdgeInsets.only(
-                        top: 10, left: 13, right: 19, bottom: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.7),
-                      borderRadius: BorderRadius.circular(23),
+                  );
+                }
+              }),
+              Container(
+                margin: EdgeInsets.only(top: 30, left: 16, right: 16),
+                padding:
+                    EdgeInsets.only(top: 10, left: 13, right: 19, bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(.7),
+                  borderRadius: BorderRadius.circular(23),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: SvgPicture.asset('assets/images/icon_back.svg')),
+                    SizedBox(
+                      width: 12,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: SvgPicture.asset(
-                                'assets/images/icon_back.svg')),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(8, 1, 3, 3),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(.7),
-                            borderRadius: BorderRadius.circular(23),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                  '${galleryDesignController.listGalleryDesignDetail.value.data.id}'),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              SvgPicture.asset('assets/images/icon_star.svg'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 2.4,
-                          left: MediaQuery.of(context).size.width - 70,
-                          right: 16),
-                      padding: EdgeInsets.all(16),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(8, 1, 3, 3),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(.8),
+                        color: Colors.white.withOpacity(.7),
                         borderRadius: BorderRadius.circular(23),
                       ),
-                      child:
-                          SvgPicture.asset('assets/images/icon_bookmark.svg')),
-                ],
-              );
-            }
-          }),
+                      child: Row(
+                        children: [
+                          Text(
+                              '${galleryDesignController.listGalleryDesignDetail.value.data.rate.toString()}'),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          SvgPicture.asset('assets/images/icon_star.svg'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 2.4,
+                      left: MediaQuery.of(context).size.width - 70,
+                      right: 16),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(.8),
+                    borderRadius: BorderRadius.circular(23),
+                  ),
+                  child: SvgPicture.asset('assets/images/icon_bookmark.svg')),
+            ],
+          ),
         ));
   }
 }

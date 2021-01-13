@@ -59,7 +59,7 @@ class GalleryDesignData {
   String description;
   int vote;
   int saved;
-  int rate;
+  double rate;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -73,7 +73,7 @@ class GalleryDesignData {
         description: json["description"],
         vote: json["vote"],
         saved: json["saved"],
-        rate: json["rate"],
+        rate: json["rate"].toDouble(),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
       );
@@ -130,8 +130,14 @@ class GalleryDesignDetailData {
     this.userId,
     this.name,
     this.category,
-    this.description,
     this.image,
+    this.description,
+    this.vote,
+    this.saved,
+    this.rate,
+    this.linkWa,
+    this.linkSkype,
+    this.linkEmail,
     this.createdAt,
     this.updatedAt,
   });
@@ -140,8 +146,14 @@ class GalleryDesignDetailData {
   int userId;
   String name;
   String category;
-  String description;
   String image;
+  String description;
+  int vote;
+  int saved;
+  double rate;
+  String linkWa;
+  String linkSkype;
+  String linkEmail;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -151,8 +163,14 @@ class GalleryDesignDetailData {
         userId: json["user_id"],
         name: json["name"],
         category: json["category"],
-        description: json["description"],
         image: json["image"],
+        description: json["description"],
+        vote: json["vote"],
+        saved: json["saved"],
+        rate: json["rate"].toDouble(),
+        linkWa: json["link_wa"],
+        linkSkype: json["link_skype"],
+        linkEmail: json["link_email"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
       );
@@ -162,8 +180,14 @@ class GalleryDesignDetailData {
         "user_id": userId,
         "name": name,
         "category": category,
-        "description": description,
         "image": image,
+        "description": description,
+        "vote": vote,
+        "saved": saved,
+        "rate": rate,
+        "link_wa": linkWa,
+        "link_skype": linkSkype,
+        "link_email": linkEmail,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
       };

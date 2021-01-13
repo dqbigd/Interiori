@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:interiori/controller/gallery_design_controller.dart';
 import 'package:interiori/controller/home_controller.dart';
+import 'package:interiori/controller/shop_controller.dart';
 import 'package:interiori/style/color.dart';
 import 'package:interiori/style/component.dart';
 import 'package:interiori/utils/shared_preferences_manager.dart';
@@ -16,6 +17,7 @@ import 'gallery_design/gallery_design_page.dart';
 class HomePage extends StatelessWidget {
   SharedPreferencesManager prefs = SharedPreferencesManager();
   HomeController homeController = Get.put(HomeController());
+  ShopController shopController = Get.put(ShopController());
   GalleryDesignController galleryDesignController =
       Get.put(GalleryDesignController());
 
@@ -135,6 +137,7 @@ class HomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
+                              shopController.getShopData();
                               Get.to(ShopPage());
                             },
                             child: MenuCard(

@@ -96,7 +96,7 @@ class ApiNetwork {
     if (response.statusCode == 200) {
       var responseString = response.body;
 
-      // print(responseString);
+      // print('resp' + responseString);
 
       return galleryDesignResponseFromJson(responseString);
     } else {

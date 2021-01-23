@@ -53,7 +53,9 @@ class ShopPage extends StatelessWidget {
                           child: RoundedInputField(
                             hintText: "Search",
                             icon: Icons.search,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              shopController.getSearchData(value);
+                            },
                             bgColor: Colors.white,
                             iconColor: Color(0XFF727272),
                           ),
@@ -93,119 +95,139 @@ class ShopPage extends StatelessWidget {
                     return Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: GridView.builder(
-                          itemCount: shopController.listShop.value.data.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                            childAspectRatio: 0.75,
-                          ),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () async {
-                                var url =
-                                    '${shopController.listShop.value.data[index].shopLink}';
-                                if (await canLaunch(url)) {
-                                  await launch(url);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(left: 3, right: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(23),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(1, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black.withOpacity(.1),
-                                    ),
-                                  ],
+                        child: Obx(() {
+                          if (shopController.listShopFiltered.value.isNull) {
+                            return Center(child: Text('Data Not Found'));
+                          } else {
+                            return Obx(() {
+                              return GridView.builder(
+                                itemCount: shopController
+                                    .listShopFiltered.value.data.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 20,
+                                  childAspectRatio: 0.75,
                                 ),
-                                child: Column(
-                                  // crossAxisAlignment:
-                                  //     CrossAxisAlignment.stretch,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          height: 192,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(23),
-                                                topRight: Radius.circular(23)),
-                                            child: Hero(
-                                              tag: shopController.listShop.value
-                                                  .data[index].image,
-                                              child: Image.network(
-                                                '$linkImage${shopController.listShop.value.data[index].image}',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      var url =
+                                          '${shopController.listShopFiltered.value.data[index].shopLink}';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                    child: Container(
+                                      margin:
+                                          EdgeInsets.only(left: 3, right: 3),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(23),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: Offset(1, 1),
+                                            blurRadius: 8,
+                                            color: Colors.black.withOpacity(.1),
                                           ),
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                14, 4, 14, 8),
-                                            color:
-                                                Colors.white.withOpacity(0.7),
-                                            width: 192,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${shopController.listShop.value.data[index].name}',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        // crossAxisAlignment:
+                                        //     CrossAxisAlignment.stretch,
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                height: 192,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  23),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  23)),
+                                                  child: Hero(
+                                                    tag: shopController
+                                                        .listShopFiltered
+                                                        .value
+                                                        .data[index]
+                                                        .image,
+                                                    child: Image.network(
+                                                      '$linkImage${shopController.listShopFiltered.value.data[index].image}',
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
-                                                Text(
-                                                    '${NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(double.parse(shopController.listShop.value.data[index].price))}'),
-                                              ],
-                                            ),
+                                              ),
+                                              Positioned(
+                                                bottom: 0,
+                                                child: Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      14, 4, 14, 8),
+                                                  color: Colors.white
+                                                      .withOpacity(0.7),
+                                                  width: 192,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        '${shopController.listShopFiltered.value.data[index].name}',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                      Text(
+                                                          '${NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(double.parse(shopController.listShop.value.data[index].price))}'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: 38,
-                                          height: 38,
-                                          child: Image.network(
-                                            '$linkImageLogo${shopController.listShop.value.data[index].shopLogo}',
-                                            fit: BoxFit.cover,
+                                          SizedBox(
+                                            height: 8,
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text(
-                                            '${shopController.listShop.value.data[index].shopName}'),
-                                      ],
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 38,
+                                                height: 38,
+                                                child: Image.network(
+                                                  '$linkImageLogo${shopController.listShopFiltered.value.data[index].shopLogo}',
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                              Text(
+                                                  '${shopController.listShopFiltered.value.data[index].shopName}'),
+                                            ],
+                                          ),
+                                          // SizedBox(
+                                          //   height: 7,
+                                          // ),
+                                        ],
+                                      ),
                                     ),
-                                    // SizedBox(
-                                    //   height: 7,
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                  );
+                                },
+                              );
+                            });
+                          }
+                        }),
                       ),
                     );
                   }

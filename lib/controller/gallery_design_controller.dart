@@ -10,7 +10,9 @@ class GalleryDesignController extends GetxController {
 
   var isLoading = false.obs;
   var listGalleryDesign = GalleryDesignResponse().obs;
+  var listGalleryDesignFiltered = GalleryDesignResponse().obs;
   var listGalleryDesignDetail = GalleryDesignDetailResponse().obs;
+  var searchValue = ''.obs;
 
   @override
   void onInit() {
@@ -29,6 +31,8 @@ class GalleryDesignController extends GetxController {
         // print('length : ' + response.data.length.toString());
 
         listGalleryDesign.value = response;
+        listGalleryDesignFiltered.value = response;
+
         // print(listGalleryDesign.value);
         // print('length2 : ' + listGalleryDesign.value.data.length.toString());
       }
@@ -54,5 +58,37 @@ class GalleryDesignController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  getSearchData(String value) {
+    print(value);
+
+    print('sort ' +
+        listGalleryDesign.value.data
+            .where((u) => (u.name.toLowerCase().contains(value.toLowerCase())))
+            .toList()
+            .length
+            .toString());
+    // update();
+    print('name ' +
+        listGalleryDesign.value.data
+            .where((u) => (u.name.toLowerCase().contains(value.toLowerCase())))
+            .toList()
+            .asMap()[0]
+            .name);
+
+    // for (var i = 0; i < listGalleryDesign.value.data.length; i1++) {
+    //   // print('i' + i.toString());
+    //   if (listGalleryDesign.value.data[i].name
+    //       .toLowerCase()
+    //       .contains(value.toLowerCase())) {
+    //     listGalleryDesignFiltered.value.data[i] =
+    //         listGalleryDesign.value.data[i];
+    //   } else {
+    //     listGalleryDesignFiltered.value = null;
+    //   }
+    // }
+    print('l1' + listGalleryDesignFiltered.value.data.length.toString());
+    print('l2' + listGalleryDesign.value.data.length.toString());
   }
 }

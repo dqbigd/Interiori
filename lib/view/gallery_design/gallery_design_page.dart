@@ -52,7 +52,12 @@ class GalleryDesignPage extends StatelessWidget {
                           child: RoundedInputField(
                             hintText: "Search",
                             icon: Icons.search,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              galleryDesignController.searchValue.value = value;
+                              // print('value = ' +
+                              //     galleryDesignController.searchValue.value);
+                              // galleryDesignController.getSearchData(value);
+                            },
                             bgColor: Colors.white,
                             iconColor: Color(0XFF727272),
                           ),
@@ -93,117 +98,145 @@ class GalleryDesignPage extends StatelessWidget {
                     return Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: GridView.builder(
-                          itemCount: galleryDesignController
-                              .listGalleryDesign.value.data.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                            childAspectRatio: 0.75,
-                          ),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                galleryDesignController.getDetailPage(
-                                    galleryDesignController.listGalleryDesign
-                                        .value.data[index].id);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(left: 3, right: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(23),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(1, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black.withOpacity(.1),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Container(
-                                      height: 130,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(23),
-                                        child: Hero(
-                                          tag: galleryDesignController
-                                              .listGalleryDesign
-                                              .value
-                                              .data[index]
-                                              .image,
-                                          child: Image.network(
-                                            '$linkImage${galleryDesignController.listGalleryDesign.value.data[index].image}',
-                                            fit: BoxFit.cover,
+                        child: Obx(() {
+                          return GridView.builder(
+                            itemCount: galleryDesignController
+                                .listGalleryDesign.value.data
+                                .where((u) => (u.name.toLowerCase().contains(
+                                    galleryDesignController.searchValue.value
+                                        .toLowerCase())))
+                                .toList()
+                                .length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 20,
+                              childAspectRatio: 0.75,
+                            ),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  galleryDesignController.getDetailPage(
+                                      galleryDesignController
+                                          .listGalleryDesign.value.data
+                                          .where((u) => (u.name
+                                              .toLowerCase()
+                                              .contains(galleryDesignController
+                                                  .searchValue.value
+                                                  .toLowerCase())))
+                                          .toList()
+                                          .asMap()[index]
+                                          .id);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 3, right: 3),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(23),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(1, 1),
+                                        blurRadius: 8,
+                                        color: Colors.black.withOpacity(.1),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Container(
+                                        height: 130,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(23),
+                                          child: Hero(
+                                            tag: galleryDesignController
+                                                .listGalleryDesign.value.data
+                                                .where((u) => (u.name
+                                                    .toLowerCase()
+                                                    .contains(
+                                                        galleryDesignController
+                                                            .searchValue.value
+                                                            .toLowerCase())))
+                                                .toList()
+                                                .asMap()[index]
+                                                .image,
+                                            child: Image.network(
+                                              '$linkImage${galleryDesignController.listGalleryDesign.value.data.where((u) => (u.name.toLowerCase().contains(galleryDesignController.searchValue.value.toLowerCase()))).toList().asMap()[index].image}',
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 11,
-                                    ),
-                                    Center(
-                                      child: Text(
-                                          '${galleryDesignController.listGalleryDesign.value.data[index].name}'),
-                                    ),
-                                    SizedBox(
-                                      height: 18,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SmoothStarRating(
-                                            allowHalfRating: true,
-                                            starCount: 5,
-                                            rating: galleryDesignController
-                                                .listGalleryDesign
-                                                .value
-                                                .data[index]
-                                                .rate,
-                                            size: 20,
-                                            color: Color(0XFFFFD700),
-                                            borderColor: Color(0XFFFFD700),
-                                            isReadOnly: true,
-                                            spacing: 0.0),
-                                        SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(
-                                            '${galleryDesignController.listGalleryDesign.value.data[index].vote} Users')
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(left: 16, right: 16),
-                                      child: Row(
+                                      SizedBox(
+                                        height: 11,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                            '${galleryDesignController.listGalleryDesign.value.data.where((u) => (u.name.toLowerCase().contains(galleryDesignController.searchValue.value.toLowerCase()))).toList().asMap()[index].name}'),
+                                      ),
+                                      SizedBox(
+                                        height: 18,
+                                      ),
+                                      Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                              '${galleryDesignController.listGalleryDesign.value.data[index].saved}'),
+                                          SmoothStarRating(
+                                              allowHalfRating: true,
+                                              starCount: 5,
+                                              rating: galleryDesignController
+                                                  .listGalleryDesign.value.data
+                                                  .where((u) => (u.name
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          galleryDesignController
+                                                              .searchValue.value
+                                                              .toLowerCase())))
+                                                  .toList()
+                                                  .asMap()[index]
+                                                  .rate,
+                                              size: 20,
+                                              color: Color(0XFFFFD700),
+                                              borderColor: Color(0XFFFFD700),
+                                              isReadOnly: true,
+                                              spacing: 0.0),
                                           SizedBox(
                                             width: 6,
                                           ),
-                                          SvgPicture.asset(
-                                              'assets/images/icon_save.svg'),
+                                          Text(
+                                              '${galleryDesignController.listGalleryDesign.value.data.where((u) => (u.name.toLowerCase().contains(galleryDesignController.searchValue.value.toLowerCase()))).toList().asMap()[index].vote} Users')
                                         ],
                                       ),
-                                    )
-                                  ],
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: 16, right: 16),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                                '${galleryDesignController.listGalleryDesign.value.data.where((u) => (u.name.toLowerCase().contains(galleryDesignController.searchValue.value.toLowerCase()))).toList().asMap()[index].saved}'),
+                                            SizedBox(
+                                              width: 6,
+                                            ),
+                                            SvgPicture.asset(
+                                                'assets/images/icon_save.svg'),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
+                              );
+                            },
+                          );
+                        }),
                       ),
                     );
                   }

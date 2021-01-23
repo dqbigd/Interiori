@@ -52,7 +52,9 @@ class DesignerPage extends StatelessWidget {
                             child: RoundedInputField(
                               hintText: "Search",
                               icon: Icons.search,
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                // designerController.getSearchData(value);
+                              },
                               bgColor: Colors.white,
                               iconColor: Color(0XFF727272),
                             ),

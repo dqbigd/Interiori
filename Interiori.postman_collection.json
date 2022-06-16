@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "0965d77c-38c3-40c0-9f8b-ad043873f368",
+		"name": "Interiori",
+		"description": "UAS kwu kuliah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8387223"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "full_name",
+							"value": "dskjfnjdksnf",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "dsfsdfsd",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "fsd@dfsdfsd.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin12#$",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "null",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "//member or designer",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://52522debbeb5.ngrok.io/auth/signup",
+					"protocol": "https",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "gading@gading.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin12#$",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/auth/signin",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZHFAZHEuY29tIiwicGFzc3dvcmQiOiJjN2RiMmUwYmFkOTYzMzkzOTk4OTg0MDc3OGEzMDlhNCIsImlhdCI6MTYwODg1MzE3N30.lM-Rhcjiw8QoUFD4YaGrd0RBgfhNlH-40f7_ZdD9iXU",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://76c2606d40eb.ngrok.io/user/profile",
+					"protocol": "http",
+					"host": [
+						"76c2606d40eb",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gallery design",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTI0MzU4fQ.yYde23iQOOUv9IYjc4uvudWaTXwg8jDKJB4HgKM-oC0",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/post",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user detail",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTI0MzU4fQ.yYde23iQOOUv9IYjc4uvudWaTXwg8jDKJB4HgKM-oC0",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://52522debbeb5.ngrok.io/user/detail/15",
+					"protocol": "https",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"user",
+						"detail",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gallery design detail",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTI0MzU4fQ.yYde23iQOOUv9IYjc4uvudWaTXwg8jDKJB4HgKM-oC0",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/post/show/1",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"post",
+						"show",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "detail designer",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTI0MzU4fQ.yYde23iQOOUv9IYjc4uvudWaTXwg8jDKJB4HgKM-oC0",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/post/postdesigner/10",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"post",
+						"postdesigner",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "designer link",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZHFAZHEuY29tIiwicGFzc3dvcmQiOiJjN2RiMmUwYmFkOTYzMzkzOTk4OTg0MDc3OGEzMDlhNCIsImlhdCI6MTYxMDQyOTI0NX0.OBisF18RJNVeaJKDYNXRQL5xhr511xRA-d6-i2MeNFA",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/designer/link/10",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"designer",
+						"link",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZHFAZHEuY29tIiwicGFzc3dvcmQiOiJjN2RiMmUwYmFkOTYzMzkzOTk4OTg0MDc3OGEzMDlhNCIsImlhdCI6MTYxMDQyOTI0NX0.OBisF18RJNVeaJKDYNXRQL5xhr511xRA-d6-i2MeNFA",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/save",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list designer",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTA0OTk2fQ.GigTiIRlQoMHJPGj4TIVVMJTmr_1y9yvqoRPe_B8zNY",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/designer/listdesigner",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"designer",
+						"listdesigner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shop",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ2FkaW5nQGdhZGluZy5jb20iLCJwYXNzd29yZCI6ImM3ZGIyZTBiYWQ5NjMzOTM5OTg5ODQwNzc4YTMwOWE0IiwiaWF0IjoxNjEwNTI0MzU4fQ.yYde23iQOOUv9IYjc4uvudWaTXwg8jDKJB4HgKM-oC0",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://52522debbeb5.ngrok.io/shop",
+					"protocol": "http",
+					"host": [
+						"52522debbeb5",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"shop"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
